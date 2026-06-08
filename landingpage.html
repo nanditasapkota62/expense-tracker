@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spendly — Spend Smarter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+,::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#fdf8f0;
+  --ink:#0f0d0a;
+  --leaf:#2d6a4f;
+  --leaf-light:#52b788;
+  --leaf-pale:#d8f3dc;
+  --amber:#e9a825;
+  --rose:#c9184a;
+  --muted:#6b6457;
+  --card:#fff;
+  --border:#e8e0d4;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'DM Sans',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 60px;
+  background:rgba(253,248,240,0.85);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Fraunces',serif;
+  font-size:1.5rem;font-weight:700;
+  color:var(--leaf);
+  letter-spacing:-0.02em;
+}
+.logo span{color:var(--amber)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  text-decoration:none;color:var(--muted);
+  font-size:0.9rem;font-weight:400;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{
+  background:var(--leaf);color:#fff;
+  padding:10px 24px;border-radius:100px;
+  font-size:0.88rem;font-weight:500;
+  text-decoration:none;
+  transition:background .2s, transform .15s;
+  border:none;cursor:pointer;
+}
+.nav-cta:hover{background:#1f4f39;transform:translateY(-1px)}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:120px 60px 80px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+/* background blob */
+.hero::before{
+  content:'';position:absolute;
+  width:700px;height:700px;
+  background:radial-gradient(circle, rgba(82,183,136,0.15) 0%, transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-60%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;
+  width:400px;height:400px;
+  background:radial-gradient(circle, rgba(233,168,37,0.12) 0%, transparent 70%);
+  bottom:0;right:10%;
+  pointer-events:none;
+}
+
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--leaf-pale);color:var(--leaf);
+  padding:6px 16px;border-radius:100px;
+  font-size:0.78rem;font-weight:500;
+  letter-spacing:0.04em;
+  margin-bottom:28px;
+  animation:fadeUp .6s ease both;
+}
+.hero-tag::before{content:'✦';font-size:0.7rem}
+
+h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(3rem,7vw,6rem);
+  font-weight:900;
+  line-height:1.0;
+  letter-spacing:-0.03em;
+  max-width:820px;
+  animation:fadeUp .7s ease .1s both;
+}
+h1 em{
+  font-style:italic;font-weight:300;
+  color:var(--leaf);
+}
+h1 .underline-amber{
+  position:relative;display:inline-block;
+}
+h1 .underline-amber::after{
+  content:'';position:absolute;
+  left:0;bottom:-4px;right:0;height:6px;
+  background:var(--amber);
+  border-radius:3px;
+  transform:scaleX(0);transform-origin:left;
+  animation:scaleIn .5s ease .8s both;
+}
+@keyframes scaleIn{to{transform:scaleX(1)}}
+
+.hero-sub{
+  margin-top:28px;
+  font-size:1.15rem;
+  color:var(--muted);
+  max-width:520px;
+  line-height:1.65;
+  animation:fadeUp .7s ease .2s both;
+}
+.hero-actions{
+  margin-top:40px;
+  display:flex;gap:16px;align-items:center;
+  animation:fadeUp .7s ease .3s both;
+}
+.btn-primary{
+  background:var(--leaf);color:#fff;
+  padding:15px 36px;border-radius:100px;
+  font-size:1rem;font-weight:500;
+  text-decoration:none;
+  transition:all .2s;
+  box-shadow:0 4px 24px rgba(45,106,79,0.3);
+}
+.btn-primary:hover{background:#1f4f39;transform:translateY(-2px);box-shadow:0 8px 32px rgba(45,106,79,0.4)}
+.btn-ghost{
+  color:var(--ink);font-size:0.95rem;
+  text-decoration:none;
+  display:flex;align-items:center;gap:8px;
+  transition:gap .2s;
+}
+.btn-ghost:hover{gap:12px}
+.btn-ghost span{font-size:1.1rem}
+
+/* HERO DASHBOARD MOCKUP */
+.hero-mockup{
+  margin-top:70px;
+  width:100%;max-width:900px;
+  animation:fadeUp .8s ease .4s both;
+  position:relative;z-index:1;
+}
+.mockup-browser{
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 32px 80px rgba(15,13,10,0.15), 0 0 0 1px var(--border);
+  overflow:hidden;
+}
+.browser-bar{
+  background:#f5f0e8;
+  padding:12px 20px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--border);
+}
+.browser-dots{display:flex;gap:6px}
+.browser-dots span{
+  width:12px;height:12px;border-radius:50%;
+}
+.browser-dots span:nth-child(1){background:#ff6059}
+.browser-dots span:nth-child(2){background:#ffbd2e}
+.browser-dots span:nth-child(3){background:#28ca41}
+.browser-url{
+  flex:1;background:#ede8e0;border-radius:8px;
+  padding:5px 14px;font-size:0.78rem;color:var(--muted);
+  font-family:monospace;
+}
+
+/* Dashboard inside mockup */
+.dash{
+  display:grid;grid-template-columns:200px 1fr;
+  min-height:380px;
+}
+.dash-sidebar{
+  background:#fafaf8;
+  border-right:1px solid var(--border);
+  padding:20px 0;
+}
+.dash-logo{
+  font-family:'Fraunces',serif;font-weight:700;
+  font-size:1.1rem;color:var(--leaf);
+  padding:0 20px 20px;
+  border-bottom:1px solid var(--border);
+}
+.dash-logo span{color:var(--amber)}
+.dash-nav{padding:14px 0}
+.dash-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 20px;font-size:0.8rem;
+  color:var(--muted);cursor:pointer;
+}
+.dash-item.active{
+  background:var(--leaf-pale);color:var(--leaf);
+  font-weight:500;border-left:3px solid var(--leaf);
+}
+.dash-item .icon{font-size:1rem;width:18px;text-align:center}
+
+.dash-main{padding:22px;background:#fff}
+.dash-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:18px;
+}
+.dash-title{font-size:1rem;font-weight:500;color:var(--ink)}
+.dash-month{font-size:0.75rem;color:var(--muted)}
+
+.stat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.stat{
+  border-radius:12px;padding:14px;
+  border:1px solid var(--border);
+}
+.stat-label{font-size:0.7rem;color:var(--muted);margin-bottom:6px}
+.stat-val{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700}
+.stat-sub{font-size:0.65rem;color:var(--muted);margin-top:4px}
+.stat.green{background:var(--leaf-pale)} .stat.green .stat-val{color:var(--leaf)}
+.stat.amber{background:#fef9ec} .stat.amber .stat-val{color:#b07d10}
+.stat.rose{background:#fff0f3} .stat.rose .stat-val{color:var(--rose)}
+
+/* mini bar chart */
+.chart-area{margin-bottom:14px}
+.chart-label{font-size:0.7rem;color:var(--muted);margin-bottom:10px;font-weight:500}
+.bars{display:flex;align-items:flex-end;gap:6px;height:80px}
+.bar-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.bar{
+  width:100%;border-radius:5px 5px 0 0;
+  background:var(--leaf-pale);
+  transition:height .4s ease;
+  position:relative;
+  min-width:16px;
+}
+.bar.active{background:var(--leaf)}
+.bar-m{font-size:0.6rem;color:var(--muted)}
+
+/* recent txns */
+.txn-list{}
+.txn{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 0;border-bottom:1px solid #f5f0e8;
+  font-size:0.75rem;
+}
+.txn:last-child{border:none}
+.txn-left{display:flex;align-items:center;gap:10px}
+.txn-icon{
+  width:28px;height:28px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.85rem;
+}
+.txn-name{font-weight:500;color:var(--ink)}
+.txn-cat{color:var(--muted);font-size:0.68rem}
+.txn-amt{font-weight:500}
+.neg{color:var(--rose)} .pos{color:var(--leaf)}
+
+/* STATS STRIP */
+.stats-strip{
+  background:var(--ink);
+  color:#fff;
+  padding:40px 60px;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;
+}
+.strip-item{
+  text-align:center;
+  padding:20px;
+  border-right:1px solid rgba(255,255,255,0.1);
+}
+.strip-item:last-child{border:none}
+.strip-num{
+  font-family:'Fraunces',serif;
+  font-size:2.6rem;font-weight:900;
+  color:var(--leaf-light);
+  line-height:1;
+}
+.strip-label{font-size:0.82rem;color:rgba(255,255,255,0.5);margin-top:6px}
+
+/* FEATURES */
+.features{padding:100px 60px;max-width:1200px;margin:0 auto}
+.section-tag{
+  display:inline-block;
+  font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--leaf);font-weight:500;margin-bottom:16px;
+}
+.section-title{
+  font-family:'Fraunces',serif;
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:700;line-height:1.1;
+  letter-spacing:-0.02em;
+  max-width:540px;margin-bottom:60px;
+}
+.section-title em{font-style:italic;color:var(--leaf);font-weight:300}
+
+.feat-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.feat-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:32px;
+  transition:transform .2s, box-shadow .2s;
+}
+.feat-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(15,13,10,0.1)}
+.feat-card.highlight{
+  background:var(--ink);color:#fff;
+  border-color:var(--ink);
+}
+.feat-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:20px;
+  background:var(--leaf-pale);
+}
+.feat-card.highlight .feat-icon{background:rgba(255,255,255,0.1)}
+.feat-card h3{
+  font-family:'Fraunces',serif;
+  font-size:1.2rem;font-weight:700;
+  margin-bottom:10px;
+}
+.feat-card p{
+  font-size:0.9rem;line-height:1.65;
+  color:var(--muted);
+}
+.feat-card.highlight p{color:rgba(255,255,255,0.6)}
+
+/* HOW IT WORKS */
+.how{
+  padding:100px 60px;
+  background:var(--leaf-pale);
+  overflow:hidden;
+}
+.how-inner{max-width:1100px;margin:0 auto}
+.steps{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;margin-top:60px;position:relative;
+}
+.steps::before{
+  content:'';position:absolute;
+  top:28px;left:15%;right:15%;height:2px;
+  background:linear-gradient(to right, var(--leaf-light), var(--leaf));
+  z-index:0;
+}
+.step{text-align:center;position:relative;z-index:1;padding:0 16px}
+.step-num{
+  width:56px;height:56px;border-radius:50%;
+  background:var(--leaf);color:#fff;
+  font-family:'Fraunces',serif;font-size:1.4rem;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 18px;
+  box-shadow:0 0 0 6px var(--leaf-pale);
+}
+.step h4{
+  font-family:'Fraunces',serif;font-weight:700;
+  font-size:1rem;margin-bottom:8px;color:var(--ink);
+}
+.step p{font-size:0.82rem;color:var(--muted);line-height:1.6}
+
+/* PRICING */
+.pricing{padding:100px 60px;max-width:1100px;margin:0 auto;text-align:center}
+.pricing .section-title{margin:0 auto 60px}
+.plans{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;text-align:left;
+}
+.plan{
+  border:1.5px solid var(--border);
+  border-radius:20px;padding:36px;
+  background:#fff;
+  transition:transform .2s;
+}
+.plan:hover{transform:translateY(-4px)}
+.plan.popular{
+  border-color:var(--leaf);
+  background:var(--ink);color:#fff;
+  position:relative;
+}
+.pop-badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:var(--amber);color:var(--ink);
+  font-size:0.72rem;font-weight:600;
+  padding:4px 16px;border-radius:100px;
+  white-space:nowrap;
+}
+.plan-name{
+  font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin-bottom:12px;
+}
+.plan.popular .plan-name{color:rgba(255,255,255,0.5)}
+.plan-price{
+  font-family:'Fraunces',serif;font-size:2.8rem;font-weight:900;
+  line-height:1;margin-bottom:6px;
+}
+.plan-price sup{font-size:1.2rem;vertical-align:super}
+.plan-price sub{font-size:0.9rem;font-weight:300}
+.plan-desc{font-size:0.83rem;color:var(--muted);margin-bottom:24px;line-height:1.5}
+.plan.popular .plan-desc{color:rgba(255,255,255,0.5)}
+.plan-features{list-style:none;margin-bottom:32px}
+.plan-features li{
+  font-size:0.85rem;padding:7px 0;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.plan.popular .plan-features li{border-color:rgba(255,255,255,0.1)}
+.plan-features li::before{content:'✓';color:var(--leaf);font-weight:700;flex-shrink:0}
+.plan.popular .plan-features li::before{color:var(--leaf-light)}
+.plan-btn{
+  display:block;text-align:center;
+  padding:13px;border-radius:100px;
+  font-size:0.9rem;font-weight:500;
+  text-decoration:none;
+  transition:all .2s;
+}
+.plan-btn.outline{
+  border:1.5px solid var(--border);color:var(--ink);
+}
+.plan-btn.outline:hover{border-color:var(--leaf);color:var(--leaf)}
+.plan-btn.solid{
+  background:var(--leaf-light);color:var(--ink);font-weight:600;
+}
+.plan-btn.solid:hover{background:#fff}
+
+/* TESTIMONIALS */
+.testi{
+  padding:100px 60px;
+  background:var(--ink);
+  color:#fff;
+}
+.testi-inner{max-width:1100px;margin:0 auto}
+.testi .section-tag{color:var(--leaf-light)}
+.testi .section-title{color:#fff}
+.testi-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;margin-top:50px;
+}
+.testi-card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:16px;padding:28px;
+}
+.stars{color:var(--amber);font-size:0.85rem;margin-bottom:14px;letter-spacing:2px}
+.testi-text{
+  font-size:0.9rem;line-height:1.7;
+  color:rgba(255,255,255,0.75);
+  margin-bottom:20px;font-style:italic;
+}
+.testi-author{display:flex;align-items:center;gap:12px}
+.author-avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;background:rgba(255,255,255,0.1);
+  flex-shrink:0;
+}
+.author-name{font-size:0.85rem;font-weight:500}
+.author-role{font-size:0.75rem;color:rgba(255,255,255,0.4)}
+
+/* CTA */
+.cta-section{
+  padding:100px 60px;
+  text-align:center;
+}
+.cta-box{
+  max-width:700px;margin:0 auto;
+  background:var(--leaf);
+  border-radius:28px;
+  padding:70px 60px;
+  color:#fff;
+  position:relative;overflow:hidden;
+}
+.cta-box::before{
+  content:'';position:absolute;
+  width:400px;height:400px;
+  background:radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+  top:-100px;right:-100px;pointer-events:none;
+}
+.cta-box h2{
+  font-family:'Fraunces',serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:900;line-height:1.1;
+  margin-bottom:16px;
+}
+.cta-box p{
+  font-size:1rem;opacity:0.8;margin-bottom:36px;line-height:1.6;
+}
+.cta-input-row{
+  display:flex;gap:10px;max-width:440px;margin:0 auto;
+}
+.cta-input{
+  flex:1;padding:14px 20px;border-radius:100px;
+  border:none;font-size:0.9rem;
+  font-family:'DM Sans',sans-serif;
+  outline:none;
+}
+.cta-submit{
+  background:var(--ink);color:#fff;
+  border:none;padding:14px 28px;border-radius:100px;
+  font-size:0.9rem;font-weight:500;cursor:pointer;
+  white-space:nowrap;
+  transition:background .2s;
+}
+.cta-submit:hover{background:#1a1810}
+
+/* FOOTER */
+footer{
+  background:var(--ink);
+  color:rgba(255,255,255,0.5);
+  padding:50px 60px 30px;
+}
+.foot-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:40px;
+}
+.foot-logo{
+  font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;
+  color:#fff;
+}
+.foot-logo span{color:var(--amber)}
+.foot-desc{font-size:0.82rem;margin-top:8px;max-width:240px;line-height:1.6}
+.foot-links{display:flex;gap:60px}
+.foot-col h5{
+  color:#fff;font-size:0.82rem;font-weight:600;
+  margin-bottom:14px;letter-spacing:0.06em;text-transform:uppercase;
+}
+.foot-col a{
+  display:block;color:rgba(255,255,255,0.45);
+  font-size:0.82rem;text-decoration:none;
+  margin-bottom:8px;transition:color .2s;
+}
+.foot-col a:hover{color:#fff}
+.foot-bottom{
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding-top:24px;
+  display:flex;justify-content:space-between;
+  font-size:0.78rem;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:900px){
+  nav{padding:16px 24px}
+  .nav-links{display:none}
+  .hero{padding:100px 24px 60px}
+  .stats-strip,.feat-grid,.plans,.testi-grid,.steps{grid-template-columns:1fr}
+  .strip-item{border:none;border-bottom:1px solid rgba(255,255,255,0.1)}
+  .features,.how,.pricing,.testi,.cta-section{padding:60px 24px}
+  footer{padding:40px 24px 20px}
+  .foot-top{flex-direction:column;gap:30px}
+  .foot-links{flex-direction:column;gap:28px}
+  .foot-bottom{flex-direction:column;gap:8px}
+  .cta-input-row{flex-direction:column}
+  .dash{grid-template-columns:1fr}
+  .dash-sidebar{display:none}
+  .steps::before{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Spend<span>ly</span></div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Get Started Free</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Expense Tracker Reimagined</div>
+  <h1>Know exactly where your<br><em>money</em> goes, <span class="underline-amber">always</span></h1>
+  <p class="hero-sub">Spendly turns your messy spending into clear, actionable insights — so you can save more, stress less, and live freely.</p>
+  <div class="hero-actions">
+    <a href="#cta" class="btn-primary">Start for free</a>
+    <a href="#how" class="btn-ghost">See how it works <span>→</span></a>
+  </div>
+
+  <!-- Dashboard mockup -->
+  <div class="hero-mockup">
+    <div class="mockup-browser">
+      <div class="browser-bar">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">app.spendly.io/dashboard</div>
+      </div>
+      <div class="dash">
+        <div class="dash-sidebar">
+          <div class="dash-logo">Spend<span>ly</span></div>
+          <div class="dash-nav">
+            <div class="dash-item active"><span class="icon">📊</span>Dashboard</div>
+            <div class="dash-item"><span class="icon">💸</span>Expenses</div>
+            <div class="dash-item"><span class="icon">📅</span>Budget</div>
+            <div class="dash-item"><span class="icon">🏷️</span>Categories</div>
+            <div class="dash-item"><span class="icon">📈</span>Reports</div>
+            <div class="dash-item"><span class="icon">⚙️</span>Settings</div>
+          </div>
+        </div>
+        <div class="dash-main">
+          <div class="dash-header">
+            <div class="dash-title">June 2026 Overview</div>
+            <div class="dash-month">← May &nbsp; Jun &nbsp; Jul →</div>
+          </div>
+          <div class="stat-cards">
+            <div class="stat green">
+              <div class="stat-label">Total Income</div>
+              <div class="stat-val">$4,200</div>
+              <div class="stat-sub">↑ 8% vs last month</div>
+            </div>
+            <div class="stat amber">
+              <div class="stat-label">Total Spent</div>
+              <div class="stat-val">$2,840</div>
+              <div class="stat-sub">67.6% of income</div>
+            </div>
+            <div class="stat rose">
+              <div class="stat-label">Remaining</div>
+              <div class="stat-val">$1,360</div>
+              <div class="stat-sub">32.4% saved ✦</div>
+            </div>
+          </div>
+          <div class="chart-area">
+            <div class="chart-label">SPENDING THIS WEEK</div>
+            <div class="bars">
+              <div class="bar-wrap"><div class="bar" style="height:40px"></div><div class="bar-m">Mon</div></div>
+              <div class="bar-wrap"><div class="bar" style="height:65px"></div><div class="bar-m">Tue</div></div>
+              <div class="bar-wrap"><div class="bar" style="height:30px"></div><div class="bar-m">Wed</div></div>
+              <div class="bar-wrap"><div class="bar active" style="height:75px"></div><div class="bar-m">Thu</div></div>
+              <div class="bar-wrap"><div class="bar" style="height:50px"></div><div class="bar-m">Fri</div></div>
+              <div class="bar-wrap"><div class="bar" style="height:20px"></div><div class="bar-m">Sat</div></div>
+              <div class="bar-wrap"><div class="bar" style="height:10px"></div><div class="bar-m">Sun</div></div>
+            </div>
+          </div>
+          <div class="txn-list">
+            <div class="txn">
+              <div class="txn-left">
+                <div class="txn-icon" style="background:#fff9e6">🍔</div>
+                <div><div class="txn-name">Burger Palace</div><div class="txn-cat">Food · Today</div></div>
+              </div>
+              <div class="txn-amt neg">-$18.50</div>
+            </div>
+            <div class="txn">
+              <div class="txn-left">
+                <div class="txn-icon" style="background:#f0faf5">💼</div>
+                <div><div class="txn-name">Freelance Payment</div><div class="txn-cat">Income · Yesterday</div></div>
+              </div>
+              <div class="txn-amt pos">+$650.00</div>
+            </div>
+            <div class="txn">
+              <div class="txn-left">
+                <div class="txn-icon" style="background:#fff0f3">🚗</div>
+                <div><div class="txn-name">Uber Ride</div><div class="txn-cat">Transport · Jun 1</div></div>
+              </div>
+              <div class="txn-amt neg">-$22.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip reveal">
+  <div class="strip-item"><div class="strip-num">120K+</div><div class="strip-label">Active Users</div></div>
+  <div class="strip-item"><div class="strip-num">$2.4B</div><div class="strip-label">Expenses Tracked</div></div>
+  <div class="strip-item"><div class="strip-num">98%</div><div class="strip-label">Satisfaction Rate</div></div>
+  <div class="strip-item"><div class="strip-num">4.9★</div><div class="strip-label">App Store Rating</div></div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="reveal">
+    <div class="section-tag">Why Spendly</div>
+    <div class="section-title">Everything you need to <em>master</em> your money</div>
+  </div>
+  <div class="feat-grid reveal">
+    <div class="feat-card">
+      <div class="feat-icon">📊</div>
+      <h3>Smart Analytics</h3>
+      <p>Visual breakdowns and trends so you always know what's going where — no spreadsheets needed.</p>
+    </div>
+    <div class="feat-card highlight">
+      <div class="feat-icon">🤖</div>
+      <h3>AI Categorization</h3>
+      <p>Every transaction auto-tagged in seconds. Spendly learns your habits and gets smarter over time.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🔔</div>
+      <h3>Budget Alerts</h3>
+      <p>Set monthly limits per category and get notified before you overspend — not after.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🔐</div>
+      <h3>Bank-Grade Security</h3>
+      <p>256-bit encryption and read-only bank connections. Your data stays yours, always.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">📱</div>
+      <h3>Works Everywhere</h3>
+      <p>Web, iOS, and Android — all synced in real-time so your budget is always at your fingertips.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">📤</div>
+      <h3>Export Reports</h3>
+      <p>Download beautiful PDF or CSV reports for taxes, planning, or sharing with your accountant.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="reveal">
+      <div class="section-tag">How It Works</div>
+      <div class="section-title">Up and running in <em>minutes</em></div>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Create Account</h4>
+        <p>Sign up free in under 60 seconds — no credit card required.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Connect Accounts</h4>
+        <p>Link your bank, cards, or add expenses manually. Your choice.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Set Budgets</h4>
+        <p>Define monthly limits per category and let Spendly watch them.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Spend Smarter</h4>
+        <p>Get insights, spot patterns, and reach your savings goals faster.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="reveal">
+    <div class="section-tag">Pricing</div>
+    <div class="section-title">Simple, honest <em>pricing</em></div>
+  </div>
+  <div class="plans reveal">
+    <div class="plan">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price"><sup>$</sup>0<sub>/mo</sub></div>
+      <div class="plan-desc">Perfect for getting started with personal finance.</div>
+      <ul class="plan-features">
+        <li>Up to 50 transactions/month</li>
+        <li>5 budget categories</li>
+        <li>Basic reports</li>
+        <li>Mobile app access</li>
+      </ul>
+      <a href="#cta" class="plan-btn outline">Get Started Free</a>
+    </div>
+    <div class="plan popular">
+      <div class="pop-badge">⭐ Most Popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price"><sup>$</sup>9<sub>/mo</sub></div>
+      <div class="plan-desc">For people serious about financial freedom.</div>
+      <ul class="plan-features">
+        <li>Unlimited transactions</li>
+        <li>Unlimited categories</li>
+        <li>AI auto-categorization</li>
+        <li>Advanced analytics</li>
+        <li>PDF / CSV export</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="#cta" class="plan-btn solid">Start Pro Free — 14 days</a>
+    </div>
+    <div class="plan">
+      <div class="plan-name">Family</div>
+      <div class="plan-price"><sup>$</sup>19<sub>/mo</sub></div>
+      <div class="plan-desc">Shared finances made simple for your whole household.</div>
+      <ul class="plan-features">
+        <li>Up to 5 members</li>
+        <li>Shared & personal budgets</li>
+        <li>All Pro features</li>
+        <li>Family spending reports</li>
+      </ul>
+      <a href="#cta" class="plan-btn outline">Try Family Plan</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi" id="testimonials">
+  <div class="testi-inner">
+    <div class="reveal">
+      <div class="section-tag">Testimonials</div>
+      <div class="section-title">People who <em>love</em> Spendly</div>
+    </div>
+    <div class="testi-grid reveal">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <div class="testi-text">"I saved $4,000 in 6 months just by seeing where my money actually went. I had no idea how much I spent on food delivery."</div>
+        <div class="testi-author">
+          <div class="author-avatar">👩</div>
+          <div><div class="author-name">Priya Sharma</div><div class="author-role">Marketing Manager, Mumbai</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <div class="testi-text">"The AI categorization is scary good. I barely touch it anymore — Spendly handles everything and I just check the weekly summary."</div>
+        <div class="testi-author">
+          <div class="author-avatar">👨</div>
+          <div><div class="author-name">James O'Brien</div><div class="author-role">Freelance Developer, Dublin</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <div class="testi-text">"We use the family plan and it's transformed how my partner and I talk about money. No more guessing — just clear numbers."</div>
+        <div class="testi-author">
+          <div class="author-avatar">👩</div>
+          <div><div class="author-name">Sofia Mendez</div><div class="author-role">Teacher, Buenos Aires</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-box reveal">
+    <h2>Start spending smarter today</h2>
+    <p>Join 120,000+ people who use Spendly to take control of their finances. Free forever — upgrade when you're ready.</p>
+    <div class="cta-input-row">
+      <input class="cta-input" type="email" placeholder="Enter your email...">
+      <button class="cta-submit">Get Started →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-top">
+    <div>
+      <div class="foot-logo">Spend<span>ly</span></div>
+      <div class="foot-desc">Smart expense tracking for everyone. Know your money, own your future.</div>
+    </div>
+    <div class="foot-links">
+      <div class="foot-col">
+        <h5>Product</h5>
+        <a href="#">Features</a>
+        <a href="#">Pricing</a>
+        <a href="#">Changelog</a>
+        <a href="#">Roadmap</a>
+      </div>
+      <div class="foot-col">
+        <h5>Company</h5>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h5>Legal</h5>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Security</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div>© 2026 Spendly. All rights reserved.</div>
+    <div>Made with 💚 for smart spenders</div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
